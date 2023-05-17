@@ -1,5 +1,6 @@
 package com.example.demo.common.exception;
 
+import com.example.demo.common.exception.status2xx.NoContentException;
 import com.example.demo.common.support.exception.ApiError;
 import com.example.demo.common.support.exception.ApiError.ApiSubError;
 import com.example.demo.common.support.exception.CustomException;
@@ -23,6 +24,11 @@ public final class GlobalExceptionHandler { // Aspect relative to Exception Hand
         ApiError response = ApiError.of(errorCode, getPlattedApiSubErrors(exception.getCause()));
 
         return new ResponseEntity<>(response, httpStatus);
+    }
+
+    @ExceptionHandler(NoContentException.class)
+    public ResponseEntity<?> handlerNoContentException(NoContentException exception) {
+        return ResponseEntity.noContent().build();
     }
 
     private ApiSubError[] getPlattedApiSubErrors(Throwable cause) {

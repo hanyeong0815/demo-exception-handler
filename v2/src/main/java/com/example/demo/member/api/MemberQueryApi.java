@@ -1,5 +1,6 @@
 package com.example.demo.member.api;
 
+import com.example.demo.common.exception.status2xx.NoContentException;
 import com.example.demo.member.api.dto.MemberQueryDto.MemberFindAllParam;
 import com.example.demo.member.api.dto.MemberQueryDto.MemberFindAllResponseDto;
 import com.example.demo.member.domain.Member;
@@ -28,6 +29,8 @@ public class MemberQueryApi {
         // client input(page) -> 1 based indexing -> sync to initial pageable policy(: if(pageInput > 0) pageInput -= 1)
         pageable = pageable.previousOrFirst(); // 전처리
         Page<DefaultMemberProjection> memberPage = memberFindAllUseCase.findAllBy(pageable);
+
+        if (memberPage.isEmpty()) throw new NoContentException();
 
         return MemberFindAllResponseDto.builder()
                 .members(memberPage.getContent())
