@@ -45,7 +45,7 @@ dependencies {
     // Map Struct
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0' // 롬복과 작동 시점 충돌을 resolve 해 주는.
 }
 
 tasks.named('test') {
