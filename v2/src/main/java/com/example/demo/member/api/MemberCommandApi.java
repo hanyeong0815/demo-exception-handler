@@ -6,8 +6,10 @@ import com.example.demo.member.domain.type.MemberStatus;
 import com.example.demo.member.service.usecase.MemberSignUpUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 // CQRS -> 큰 시스템에서 적용하는 편.
@@ -20,6 +22,7 @@ public class MemberCommandApi {
     private final MemberSignUpUseCase memberSignUpUseCase;
 
     @PostMapping("/sign-up")
+    @ResponseStatus(HttpStatus.CREATED) // 201 CREATED
     public MemberSignUpResponseDto signUp(@RequestBody @Valid MemberSignUpRequestDto body) {
         // NOTE: 일반 회원가입 유형 Member Status: ACTIVE
         memberSignUpUseCase.signUp(body, MemberStatus.ACTIVE);

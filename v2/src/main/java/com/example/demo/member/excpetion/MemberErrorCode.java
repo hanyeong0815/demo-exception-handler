@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
 public enum MemberErrorCode implements ErrorCode {
+    USERNAME_ALREADY_USED("이미 사용 중인 계정입니다.", HttpStatus.CONFLICT),
     DEFAULT("회원 관련 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 
     public final String MESSAGE;
@@ -28,6 +29,6 @@ public enum MemberErrorCode implements ErrorCode {
 
     @Override
     public MemberException defaultException(Throwable cause) {
-        return null;
+        return new MemberException(this, cause);
     }
 }
